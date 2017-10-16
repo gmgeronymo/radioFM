@@ -6,6 +6,31 @@
 // display LCD Nokia
 U8GLIB_PCD8544 u8g(8, 9, 11, 10, 12);		//CLK=8, DIN=9, CE=11, DC=10, RST=12
 
+const uint8_t signal5[] U8G_PROGMEM={
+0xC1, 0xC3, 0xC5, 0xF9, 0xC5, 0xC3, 0xC1, 0xC0, 0xE0, 0xC0, 0xF0, 0xC0, 0xF8, 0xC0, 0xFC, 0xC0,   // 0x0010 (16) pixels
+0xFE, 
+};
+
+const uint8_t signal4[] U8G_PROGMEM={
+0xC1, 0xC3, 0xC5, 0xF9, 0xC5, 0xC3, 0xC1, 0xC0, 0xE0, 0xC0, 0xF0, 0xC0, 0xF8, 0xC0, 0xFC, 0xC0,   // 0x0010 (16) pixels
+0xC0, 
+};
+
+const uint8_t signal3[] U8G_PROGMEM={
+0xC1, 0xC3, 0xC5, 0xF9, 0xC5, 0xC3, 0xC1, 0xC0, 0xE0, 0xC0, 0xF0, 0xC0, 0xF8, 0xC0, 0xC0, 0xC0,   // 0x0010 (16) pixels
+0xC0, 
+};
+
+const uint8_t signal2[] U8G_PROGMEM={
+0xC1, 0xC3, 0xC5, 0xF9, 0xC5, 0xC3, 0xC1, 0xC0, 0xE0, 0xC0, 0xF0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0,   // 0x0010 (16) pixels
+0xC0, 
+};
+
+const uint8_t signal1[] U8G_PROGMEM={
+0xC1, 0xC3, 0xC5, 0xF9, 0xC5, 0xC3, 0xC1, 0xC0, 0xE0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0, 0xC0,   // 0x0010 (16) pixels
+0xC0, 
+};
+
 int channel;
 int channel_min = 875;
 int channel_max = 1080;
@@ -21,6 +46,8 @@ unsigned int frequencyB;
 double frequency = 0;
 /************************************************** ************************************************** */
 
+
+
 void draw(void) {
   // graphic commands to redraw the complete screen should be placed here
   //u8g.setFont(u8g_font_profont15);
@@ -28,9 +55,32 @@ void draw(void) {
   u8g.setPrintPos(15, 25); 
   u8g.print(frequency,1);
   
-  u8g.setFont(u8g_font_profont12);
-  u8g.setPrintPos(20, 40);
-  u8g.print(level);
+  // draw level
+  
+  if(level >=15)
+  {
+    u8g.drawBitmapP( 0, 0, 1, 8, signal5);
+  }
+  else if(level >=11 && level <15)
+  {
+    u8g.drawBitmapP( 0, 0, 1, 8, signal4);
+  }
+  else if(level >=9 && level <11)
+  {
+    u8g.drawBitmapP( 0, 0, 1, 8, signal3);
+  }
+   else if(level >=7 && level <9)
+  {
+    u8g.drawBitmapP( 0, 0, 1, 8, signal2);
+  }
+   else if(level <7)
+  {
+    u8g.drawBitmapP( 0, 0, 1, 8, signal1);
+  }
+  
+  //u8g.setFont(u8g_font_profont12);
+  //u8g.setPrintPos(20, 40);
+  //u8g.print(level);
 }
 
 /************************************************** ************************************************** */
